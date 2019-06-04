@@ -32,9 +32,7 @@ const explog = function (config) {
 
   utils.consoleLog(conf)
 
-  return function (req, res, next) {
-    next()
-  }
+  return utils.income
 }
 
 function mapConfig (config) {
