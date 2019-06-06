@@ -13,51 +13,41 @@
 
 const Os = require('os')
 const Utils = require('./utils')
-const OnHeader = require('on-headers')
 const hostname = Os.hostname()
 
 let cf = {
   level: 'debug',
   transecLog: true,
-  isPreFix: true,
-  preFix: ''
+  preFix: true
 }
 
 /**
  * configarution do you need.
  * @param {String} **level** level for write _debug, info, warn, error | 'debug' is default._
  * @param {Boolean} **transecLog** transections log have _incoming and outgoing will display headers url method body queryString and response messages of express | true is default._
- * @param {Boolean} **isPreFix** pre-fix of log have _date hostname session | true is default._
+ * @param {Boolean} **preFix** pre-fix of log have _date hostname session | true is default._
  */
-const explog = function (config) {
-  const conf = mapConfig(config)
+const explog = function (options) {
+  const conf = mapConfig(options)
   const utils = new Utils(conf)
-  if (conf.isPreFix) {
-    const sid = utils.ramdomString(22)
-    const date = new Date(Date.now()).toLocaleString()
-    conf.preFix = date + '|' + hostname + '|' + sid + '|'
+  if (conf.preFix) {
+    conf.preFix = conf.preFix !== true ? conf.preFix : (new Date(Date.now()).toLocaleString() + '|' + hostname + '|' + utils.ramdomString(22))
   }
 
   utils.consoleLog(conf)
   return (req, res, next) => {
-    utils.income(req, res)
-
-    OnHeader(res, () => {
-      const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
-      ' __body=' + (res.body || null) +
-      ' __response_time=' + (Date.now() - req.requestTime) + 'ms'
-      console.log(log)
-    })
-
+    utils.inComing(req)
+    utils.getBody(res)
+    utils.outGoing(req, res)
     next()
   }
 }
 
-function mapConfig (config) {
-  if (config) {
-    cf.level = config.level.toLowerCase() || cf.level
-    cf.transecLog = config.transecLog || cf.transecLog
-    cf.isPreFix = config.isPreFix === undefined ? cf.isPreFix : config.isPreFix === cf.isPreFix
+function mapConfig (options) {
+  if (options) {
+    cf.level = options.level ? options.level.toLowerCase() : cf.level
+    cf.transecLog = options.transecLog || cf.transecLog
+    cf.preFix = options.preFix === undefined ? cf.preFix : options.preFix
   }
   return cf
 }
