@@ -1,7 +1,7 @@
 {
   "name": "explog",
   "version": "1.0.0",
-  "description": "",
+  "description": "Request and response logger middleware for node.js",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/enta1234/explog.git"
   },
-  "author": "",
+  "author": "Chantatha Polsamak ucode",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/enta1234/explog/issues"
