@@ -17,6 +17,7 @@
   },
   "author": "Chantatha Polsamak ucode",
   "license": "ISC",
+  "keywords": ["express", "logger", "http", "middleware"],
   "bugs": {
     "url": "https://github.com/enta1234/explog/issues"
   },
