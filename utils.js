@@ -24,11 +24,41 @@ utils.prototype.ramdomString = (length) => {
   })
 }
 
-utils.prototype.income = (req, _, next) => {
-  let income = 'incoming| __method=' + req.method + ' __url=' + req.originalUrl + ' __headers=' + JSON.stringify(req.headers) +
+utils.prototype.income = (req, _) => {
+  const income = 'incoming| __method=' + req.method + ' __url=' + req.originalUrl + ' __headers=' + JSON.stringify(req.headers) +
   ' __body=' + (req.method === 'GET' ? '' : req.body ? (Object.keys(req.body).length > 0 ? req.body : '') : null)
+
+  req.requestTime = Date.now()
+
   console.log(income)
-  next()
+}
+
+utils.prototype.outting = async (_, res, n) => {
+  // var oldWrite = res.write
+
+  // var oldEnd = res.end
+
+  // var chunks = []
+
+  // let body = null
+
+  // res.write = function (chunk) {
+  //   chunks.push(chunk)
+
+  //   oldWrite.apply(res, arguments)
+  // }
+
+  // res.end = function (chunk) {
+  //   if (chunk) { chunks.push(chunk) }
+
+  //   body = Buffer.concat(chunks).toString('utf8')
+
+  //   oldEnd.apply(res, arguments)
+  // }
+
+  // // next()
+  // // n()
+  // return body
 }
 
 utils.prototype.consoleLog = () => {

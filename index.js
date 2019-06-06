@@ -1,12 +1,20 @@
+/*!
+ * explog
+ * Copyright(c) 2019 Chantatha Polsamak ucode
+ * MIT Licensed
+ */
+
 'use strict'
 
 /**
- *
+ * Module exports.
+ * @public
  */
 
-const os = require('os')
+const Os = require('os')
 const Utils = require('./utils')
-const hostname = os.hostname()
+const OnHeader = require('on-headers')
+const hostname = Os.hostname()
 
 let cf = {
   level: 'debug',
@@ -31,8 +39,18 @@ const explog = function (config) {
   }
 
   utils.consoleLog(conf)
+  return (req, res, next) => {
+    utils.income(req, res)
 
-  return utils.income
+    OnHeader(res, () => {
+      const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
+      ' __body=' + (res.body || null) +
+      ' __response_time=' + (Date.now() - req.requestTime) + 'ms'
+      console.log(log)
+    })
+
+    next()
+  }
 }
 
 function mapConfig (config) {
