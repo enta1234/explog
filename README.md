@@ -97,6 +97,8 @@ Create a logger middleware function using the given format and options.
  - add color.
  - config transection log to multiple line.
  - write file.
+ - summary log.
+ - detail log.
 
 ## License
 
