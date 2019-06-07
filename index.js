@@ -31,7 +31,7 @@ const explog = function (options) {
   const conf = mapConfig(options)
   const utils = new Utils(conf)
   if (conf.preFix) {
-    conf.preFix = conf.preFix !== true ? conf.preFix : (new Date(Date.now()).toLocaleString() + '|' + hostname + '|' + utils.ramdomString(22))
+    conf.preFix = conf.preFix !== true ? conf.preFix : (new Date(Date.now()).toLocaleString() + '|' + hostname)
   }
 
   utils.consoleLog(conf)
