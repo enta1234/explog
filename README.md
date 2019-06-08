@@ -73,7 +73,7 @@ Create a logger middleware function using the given format and options.
         at bootstrap_node.js:625:3
   ```
 
-**transecLog** Went you use the express this option will write transection log for you. You will get incoming and outgoing.
+**transecLog** When you use express this option will write transection log for you. You will get incoming and outgoing.
 
   >transecLog: true
 
@@ -93,12 +93,12 @@ Create a logger middleware function using the given format and options.
   ```
 
 ## TODO
- - custom pre-fix
- - add color.
- - config transection log to multiple line.
- - write file.
- - summary log.
- - detail log.
+ - [] custom pre-fix
+ - [] add color.
+ - [x] config transection log to multiple line.
+ - [] write file.
+ - [] summary log.
+ - [] detail log.
 
 ## License
 

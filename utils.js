@@ -18,11 +18,11 @@ const _error = console.error
 //   Magenta: '\x1b[35m'
 // }
 
-let conf = {}
+let opt = {}
 
 function utils (config) {
-  conf = config
-  conf.level = config.level === 'debug' ? config.level = 0 : config.level === 'info' ? config.level = 1 : config.level === 'warn' ? config.level = 2 : config.level === 'error' ? config.level = 3 : 0
+  opt = config
+  opt.level = config.level === 'debug' ? config.level = 0 : config.level === 'info' ? config.level = 1 : config.level === 'warn' ? config.level = 2 : config.level === 'error' ? config.level = 3 : 0
 }
 
 utils.prototype.ramdomString = (length) => {
@@ -32,12 +32,16 @@ utils.prototype.ramdomString = (length) => {
 }
 
 utils.prototype.inComing = (req) => {
-  const income = 'incoming| __method=' + req.method + ' __url=' + req.originalUrl + ' __headers=' + JSON.stringify(req.headers) +
-  ' __body=' + (req.method === 'GET' ? '' : req.body ? (Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : null) : null)
-
   req.requestTime = Date.now()
-
-  console.log(income)
+  if (!opt.multiple) {
+    const income = 'incoming| __method=' + req.method + ' __url=' + req.originalUrl + ' __headers=' + JSON.stringify(req.headers) +
+    ' __body=' + (req.method === 'GET' ? '' : req.body ? (Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : null) : null)
+    console.log(income)
+  } else {
+    console.log('incoming| __method=' + req.method + ' __url=' + req.originalUrl)
+    console.log('__headers=' + JSON.stringify(req.headers))
+    console.log('__body=' + (req.method === 'GET' ? '' : req.body ? (Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : null) : null))
+  }
 }
 
 utils.prototype.getBody = async (res) => {
@@ -57,18 +61,25 @@ utils.prototype.getBody = async (res) => {
 
 utils.prototype.outGoing = async (req, res) => {
   res.on('finish', () => {
-    const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
-    ' __body=' + (res.body || null) +
-    ' __response_time=' + (Date.now() - req.requestTime) + 'ms'
-    console.log(log)
+    if (!opt.multiple) {
+      const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
+        ' __body=' + (res.body || null) +
+        ' __response_time=' + (Date.now() - req.requestTime) + 'ms'
+      console.log(log)
+    } else {
+      console.log('outgoing| __status_code=' + res.statusCode)
+      console.log('__headers=' + JSON.stringify(res._headers))
+      console.log('__body=' + (res.body || null))
+      console.log('__response_time=' + (Date.now() - req.requestTime) + 'ms')
+    }
   })
 }
 
 utils.prototype.consoleLog = () => {
-  warn(conf)
-  info(conf)
-  debug(conf)
-  error(conf)
+  warn(opt)
+  info(opt)
+  debug(opt)
+  error(opt)
 }
 
 function debug (config) {

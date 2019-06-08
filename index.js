@@ -18,14 +18,16 @@ const hostname = Os.hostname()
 let cf = {
   level: 'debug',
   transecLog: true,
+  multiple: false,
   preFix: true
 }
 
 /**
  * configarution do you need.
- * @param {String} **level** level for write _debug, info, warn, error | 'debug' is default._
- * @param {Boolean} **transecLog** transections log have _incoming and outgoing will display headers url method body queryString and response messages of express | true is default._
- * @param {Boolean} **preFix** pre-fix of log have _date hostname session | true is default._
+ * @param {String} **level** level for write debug, info, warn, error | 'debug' is default.
+ * @param {Boolean} **transecLog** transections log have _incoming and outgoing will display headers url method body queryString and response messages of express | true is default.
+ * @param {Boolean} **multiple** display transections log to multiple line | false is default
+ * @param {Boolean} **preFix** pre-fix of log have date hostname session | true is default.
  */
 const explog = function (options) {
   const conf = mapConfig(options)
@@ -47,6 +49,7 @@ function mapConfig (options) {
   if (options) {
     cf.level = options.level ? options.level.toLowerCase() : cf.level
     cf.transecLog = options.transecLog || cf.transecLog
+    cf.multiple = options.multiple || cf.multiple
     cf.preFix = options.preFix === undefined ? cf.preFix : options.preFix
   }
   return cf
