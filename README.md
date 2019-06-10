@@ -19,6 +19,7 @@ Create a logger middleware function using the given format and options.
  - **level** level for write debug, info, warn, error and 'debug' is default.
  - **transecLog** transections log have incoming and outgoing will display headers url method body queryString and response messages of express | true is default.
  - **preFix** pre-fix of log have date hostname session. you can set false or some string | true is default.
+ - **multiple** display transections log to multiple line | false is default
 
 # Examples
 
