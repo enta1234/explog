@@ -9,7 +9,9 @@ Request and response logger middleware for node.js
  explog({
   level: 'debug', // default
   transecLog: true, // default
-  preFix: true // default
+  preFix: true, // default
+  multiple: false, // default
+  session: 0 // default
 })
  ```
 
@@ -20,6 +22,9 @@ Create a logger middleware function using the given format and options.
  - **transecLog** transections log have incoming and outgoing will display headers url method body queryString and response messages of express | true is default.
  - **preFix** pre-fix of log have date hostname session. you can set false or some string | true is default.
  - **multiple** display transections log to multiple line | false is default
+ - **session** session in transection log(incoming & outgoing) we have 4 option 0 mean don't create session, 1 mean random a-zA-Z0-9 22 digits 2 mean random only alphabet 22 digits and 3 mean only number 22 digits | 0 is default
+
+ > shall use preFix to hard custom session.
 
 # Examples
 
@@ -94,12 +99,13 @@ Create a logger middleware function using the given format and options.
   ```
 
 ## TODO
- - [] custom pre-fix
- - [] add color.
+ - [x] custom pre-fix
  - [x] config transection log to multiple line.
- - [] write file.
- - [] summary log.
- - [] detail log.
+ - [ ] add session log to console.
+ - [ ] ~~add color.~~
+ - [ ] write file.
+ - [ ] summary log.
+ - [ ] detail log.
 
 ## License
 
