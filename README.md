@@ -101,7 +101,7 @@ Create a logger middleware function using the given format and options.
 ## TODO
  - [x] custom pre-fix
  - [x] config transection log to multiple line.
- - [ ] add session log to console.
+ - [X] add session log to console.
  - [ ] ~~add color.~~
  - [ ] write file.
  - [ ] summary log.
