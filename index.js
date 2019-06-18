@@ -11,15 +11,15 @@
  * @public
  */
 
-const Os = require('os')
 const Utils = require('./utils')
-const hostname = Os.hostname()
 
 let cf = {
   level: 'debug',
   transecLog: true,
   multiple: false,
-  preFix: true
+  preFix: true,
+  txtPreFix: '',
+  session: 0
 }
 
 /**
@@ -28,19 +28,21 @@ let cf = {
  * @param {Boolean} **transecLog** transections log have _incoming and outgoing will display headers url method body queryString and response messages of express | true is default.
  * @param {Boolean} **multiple** display transections log to multiple line | false is default
  * @param {Boolean} **preFix** pre-fix of log have date hostname session | true is default.
+ * @param {Number} **session** have 4 option 0 mean don't create session, 1 mean random a-zA-Z0-9 22 digits 2 mean random only alphabet 22 digits and 3 mean only number 22 digits | 0 is default
  */
 const explog = function (options) {
   const conf = mapConfig(options)
   const utils = new Utils(conf)
-  if (conf.preFix) {
-    conf.preFix = conf.preFix !== true ? conf.preFix : (new Date(Date.now()).toLocaleString() + '|' + hostname)
-  }
+  conf.txtPreFix = utils.getSession(conf)
 
   utils.consoleLog(conf)
   return (req, res, next) => {
-    utils.inComing(req)
-    utils.getBody(res)
-    utils.outGoing(req, res)
+    conf.txtPreFix = utils.getSession(conf)
+    if (conf.transecLog) {
+      utils.inComing(req)
+      utils.getBody(res)
+      utils.outGoing(req, res)
+    }
     next()
   }
 }
@@ -48,8 +50,9 @@ const explog = function (options) {
 function mapConfig (options) {
   if (options) {
     cf.level = options.level ? options.level.toLowerCase() : cf.level
-    cf.transecLog = options.transecLog || cf.transecLog
+    cf.transecLog = options.transecLog === false ? options.transecLog : cf.transecLog
     cf.multiple = options.multiple || cf.multiple
+    cf.session = options.session || cf.session
     cf.preFix = options.preFix === undefined ? cf.preFix : options.preFix
   }
   return cf

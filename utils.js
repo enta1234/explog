@@ -5,10 +5,13 @@
  */
 
 'use strict'
+
 const _log = console.log
 const _info = console.info
 const _warn = console.warn
 const _error = console.error
+const Os = require('os')
+const hostname = Os.hostname()
 // const color = {
 //   Reset: '\x1b[0m',
 //   Red: '\x1b[31m',
@@ -23,12 +26,6 @@ let opt = {}
 function utils (config) {
   opt = config
   opt.level = config.level === 'debug' ? config.level = 0 : config.level === 'info' ? config.level = 1 : config.level === 'warn' ? config.level = 2 : config.level === 'error' ? config.level = 3 : 0
-}
-
-utils.prototype.ramdomString = (length) => {
-  return new Array(length).join().replace(/(.|$)/g, function () {
-    return ((Math.random() * 36) | 0).toString(36)[Math.random() < 0.5 ? 'toString' : 'toUpperCase']()
-  })
 }
 
 utils.prototype.inComing = (req) => {
@@ -82,11 +79,47 @@ utils.prototype.consoleLog = () => {
   error(opt)
 }
 
+utils.prototype.getSession = ({ preFix, session }) => {
+  // interim code after this verion will gen from regular expressions.
+  if (typeof session !== 'number') {
+    throw new TypeError('session must be number')
+  } else if (session > 3) {
+    throw new RangeError('session out of range, must be 0-3')
+  }
+
+  let transection = ''
+  switch (session) {
+    case 0:
+      break
+    case 1:
+      transection = genarater(1, 22)
+      break
+    case 2:
+      transection = genarater(2, 22)
+      break
+    case 3:
+      transection = genarater(3, 22)
+      break
+    default:
+      break
+  }
+
+  if (typeof preFix === 'boolean' && preFix === true && session !== 0 && session < 4) {
+    return new Date(Date.now()).toLocaleString() + '|' + hostname + '|' + transection
+  } else if (typeof preFix === 'boolean' && preFix === true && session === 0) {
+    return new Date(Date.now()).toLocaleString() + '|' + hostname
+  } else if (typeof preFix !== 'boolean' && session !== 0) {
+    return preFix + '|' + transection
+  } else {
+    return preFix
+  }
+}
+
 function debug (config) {
   console.log = function (m) {
     if (config.level === 0) {
       config.preFix
-        ? _log(config.preFix + '|debug|', ...arguments)
+        ? _log(config.txtPreFix + '|debug|', ...arguments)
         : _log(...arguments)
     }
   }
@@ -95,7 +128,7 @@ function info (config) {
   console.info = function (m) {
     if (config.level <= 1) {
       config.preFix
-        ? _info(config.preFix + '|info|', ...arguments)
+        ? _info(config.txtPreFix + '|info|', ...arguments)
         : _info(...arguments)
     }
   }
@@ -104,7 +137,7 @@ function warn (config) {
   console.warn = function (...m) {
     if (config.level <= 2) {
       config.preFix
-        ? _warn(config.preFix + '|warn|', ...arguments)
+        ? _warn(config.txtPreFix + '|warn|', ...arguments)
         : _warn(...arguments)
     }
   }
@@ -112,8 +145,28 @@ function warn (config) {
 function error (config) {
   console.error = function (m) {
     config.preFix
-      ? _error(config.preFix + '|error|', ...arguments)
+      ? _error(config.txtPreFix + '|error|', ...arguments)
       : _error(...arguments)
+  }
+}
+
+const genarater = (schema, length) => {
+  switch (schema) {
+    case 1:
+      return new Array(length).join().replace(/(.|$)/g, function () {
+        return ((Math.random() * 36) | 0).toString(36)[Math.random() < 0.5 ? 'toString' : 'toUpperCase']()
+      })
+    case 2:
+      const alp = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+      return new Array(length).join().replace(/(.|$)/g, function () {
+        return alp.charAt(Math.floor(Math.random() * alp.length))
+      })
+    case 3:
+      return new Array(length).join().replace(/(.|$)/g, function () {
+        return Math.floor(Math.random() * (9 - 0 + 1) + 0)
+      })
+    default:
+      break
   }
 }
 

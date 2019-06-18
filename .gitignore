@@ -1,4 +1,4 @@
 **/node_*
 *-lock.json
 test.js
-**vscode/**
+.vscode
