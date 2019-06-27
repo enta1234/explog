@@ -103,6 +103,7 @@ Create a logger middleware function using the given format and options.
  - [x] config transection log to multiple line.
  - [X] add session log to console.
  - [ ] ~~add color.~~
+ - [ ] handle 404 page not found.
  - [ ] write file.
  - [ ] summary log.
  - [ ] detail log.

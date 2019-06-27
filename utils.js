@@ -50,10 +50,22 @@ utils.prototype.getBody = async (res) => {
     oldWrite.apply(res, arguments)
   }
   res.end = function (chunk) {
-    if (chunk) {
+    if (chunk && typeof chunk === Object) {
       chunks.push(chunk) 
       res.body = Buffer.concat(chunks).toString('utf8')
       oldEnd.apply(res, arguments)
+    } else {
+      if (!opt.multiple) {
+        const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
+          ' __body=' + chunk.split(/\r\n|\r|\n/g) +
+          ' __response_time=' + (Date.now() - res.req.requestTime) + 'ms'
+        console.log(log)
+      } else {
+        console.log('outgoing| __status_code=' + res.statusCode)
+        console.log('__headers=' + JSON.stringify(res._headers))
+        console.log('__body=' + chunk.split(/\r\n|\r|\n/g))
+        console.log('__response_time=' + (Date.now() - res.req.requestTime) + 'ms')
+      }
     }
   }
 }
