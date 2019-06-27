@@ -1,6 +1,6 @@
 {
   "name": "explog",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Request and response logger middleware for console on node.js",
   "main": "index.js",
   "dependencies": {},
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/enta1234/explog.git"
   },
-  "author": "Chantatha Polsamak ucode",
+  "author": "Chantatha Polsamak <chantatha.p@gmail.com>",
   "license": "ISC",
   "keywords": ["express", "logger", "http", "middleware", "commonlog"],
   "bugs": {
