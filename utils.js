@@ -32,12 +32,12 @@ utils.prototype.inComing = (req) => {
   req.requestTime = Date.now()
   if (!opt.multiple) {
     const income = 'incoming| __method=' + req.method + ' __url=' + req.originalUrl + ' __headers=' + JSON.stringify(req.headers) +
-    ' __body=' + (req.method === 'GET' ? '' : req.body ? (Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : null) : null)
+    ' __body=' + JSON.stringify(req.body)
     console.log(income)
   } else {
     console.log('incoming| __method=' + req.method + ' __url=' + req.originalUrl)
     console.log('__headers=' + JSON.stringify(req.headers))
-    console.log('__body=' + (req.method === 'GET' ? '' : req.body ? (Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : null) : null))
+    console.log('__body=' + JSON.stringify(req.body))
   }
 }
 
@@ -50,9 +50,11 @@ utils.prototype.getBody = async (res) => {
     oldWrite.apply(res, arguments)
   }
   res.end = function (chunk) {
-    if (chunk) { chunks.push(chunk) }
-    res.body = Buffer.concat(chunks).toString('utf8')
-    oldEnd.apply(res, arguments)
+    if (chunk) {
+      chunks.push(chunk) 
+      res.body = Buffer.concat(chunks).toString('utf8')
+      oldEnd.apply(res, arguments)
+    }
   }
 }
 
@@ -60,13 +62,13 @@ utils.prototype.outGoing = async (req, res) => {
   res.on('finish', () => {
     if (!opt.multiple) {
       const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
-        ' __body=' + (res.body || null) +
+        ' __body=' + JSON.stringify(res.body) +
         ' __response_time=' + (Date.now() - req.requestTime) + 'ms'
       console.log(log)
     } else {
       console.log('outgoing| __status_code=' + res.statusCode)
       console.log('__headers=' + JSON.stringify(res._headers))
-      console.log('__body=' + (res.body || null))
+      console.log('__body=' + JSON.stringify(res.body))
       console.log('__response_time=' + (Date.now() - req.requestTime) + 'ms')
     }
   })
