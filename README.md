@@ -1,17 +1,19 @@
 # explog
 Request and response logger middleware for node.js
 
-# API
+# API Default
 
 ```js
  const Explog = require('explog')
 
- explog({
-  level: 'debug', // default
-  transecLog: true, // default
-  preFix: true, // default
-  multiple: false, // default
-  session: 0 // default
+ Explog({
+  level: 'debug',
+  transecLog: true,
+  preFix: true,
+  multiple: false,
+  session: 0,
+  console: true,
+  writeFile: false
 })
  ```
 
@@ -23,6 +25,8 @@ Create a logger middleware function using the given format and options.
  - **preFix** pre-fix of log have date hostname session. you can set false or some string | true is default.
  - **multiple** display transections log to multiple line | false is default
  - **session** session in transection log(incoming & outgoing) we have 4 option 0 mean don't create session, 1 mean random a-zA-Z0-9 22 digits 2 mean random only alphabet 22 digits and 3 mean only number 22 digits | 0 is default
+ - **console** enable or disable console | true is default
+ - **writeFile** write console to file | false is default
 
  > shall use preFix to hard custom session.
 
@@ -102,8 +106,8 @@ Create a logger middleware function using the given format and options.
  - [x] custom pre-fix
  - [x] config transection log to multiple line.
  - [X] add session log to console.
- - [ ] ~~add color.~~
- - [ ] write file.
+ - [x] write file.
+ - [ ] config path log.
  - [ ] summary log.
  - [ ] detail log.
 
