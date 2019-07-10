@@ -13,7 +13,6 @@
 
 const Utils = require('./utils')
 const path = require('path')
-// const fs = require('fs')
 
 let cf = {
   level: 'debug',
@@ -43,13 +42,6 @@ let cf = {
  */
 const explog = function (options) {
   const conf = mapConfig(options)
-  // if (conf.writeFile) {
-  //   try {
-  //     streamTesk.appLog = Promise.all(createStream(conf.appLog.path))
-  //   } catch (error) {
-  //     console.log('error: ', error)
-  //   }
-  // }
   const utils = new Utils(conf)
   conf.txtPreFix = utils.getSession(conf)
   utils.consoleLog(conf)
