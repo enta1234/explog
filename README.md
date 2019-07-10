@@ -1,4 +1,4 @@
-# explog
+# explog (Zero Dependency)
 Request and response logger middleware for node.js
 
 # API Default
