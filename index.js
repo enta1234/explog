@@ -12,7 +12,6 @@
  */
 
 const Utils = require('./utils')
-const path = require('path')
 
 let cf = {
   level: 'debug',
@@ -24,7 +23,7 @@ let cf = {
   console: true,
   writeFile: false,
   appLog: {
-    path: path.join(__dirname, 'logs'),
+    path: './logs',
     timeRotate: 60
   }
 }
