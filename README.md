@@ -15,8 +15,7 @@ Request and response logger middleware for node.js
   console: true,
   writeFile: false
   appLog: {
-    part: './logs',
-    tr : 1
+    part: './logs'
   }
 })
  ```
