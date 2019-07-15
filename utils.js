@@ -130,6 +130,7 @@ utils.prototype.getSession = ({ preFix, session }) => {
 
 function debug (config) {
   console.log = function (m) {
+    config.txtPreFix = utils.prototype.getSession(config)
     if (config.console && config.level === 0) {
       config.preFix
         ? _log(config.txtPreFix + '|debug|', ...arguments)
@@ -144,6 +145,7 @@ function debug (config) {
 }
 function info (config) {
   console.info = function (m) {
+    config.txtPreFix = utils.prototype.getSession(config)
     if (config.console && config.level <= 1) {
       config.preFix
         ? _info(config.txtPreFix + '|info|', ...arguments)
@@ -158,6 +160,7 @@ function info (config) {
 }
 function warn (config) {
   console.warn = function (...m) {
+    config.txtPreFix = utils.prototype.getSession(config)
     if (config.console && config.level <= 2) {
       config.preFix
         ? _warn(config.txtPreFix + '|warn|', ...arguments)
@@ -172,6 +175,7 @@ function warn (config) {
 }
 function error (config) {
   console.error = function (m) {
+    config.txtPreFix = utils.prototype.getSession(config)
     if (config.console) {
       config.preFix
         ? _error(config.txtPreFix + '|error|', ...arguments)
@@ -253,5 +257,7 @@ function toStr (txt) {
     return txt
   }
 }
+
+// setInterval(() => console.log('Task executed.'), 10000)
 
 module.exports = utils
