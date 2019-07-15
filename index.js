@@ -37,7 +37,7 @@ let cf = {
  * @param {Number} **session** have 4 option 0 mean don't create session, 1 mean random a-zA-Z0-9 22 digits 2 mean random only alphabet 22 digits and 3 mean only number 22 digits | 0 is default
  * @param {Boolean} **console** true is default
  * @param {Boolean} **writeFile** false is default
- * @param {Number} **timeRotate** default 60 minute, this config will be rotation log file.
+ * @param {Object} **appLog** in this object for config **path** (string) and **tr** (minute)
  */
 const explog = function (options) {
   const conf = mapConfig(options)
@@ -65,7 +65,7 @@ function mapConfig (options) {
     cf.preFix = options.preFix === undefined ? cf.preFix : options.preFix
     cf.console = options.console === false ? options.console : cf.console
     cf.writeFile = options.writeFile === true ? options.writeFile : cf.writeFile
-    cf.appLog.timeRotate = options.appLog ? options.appLog.timeRotate : cf.appLog.timeRotate
+    cf.appLog.timeRotate = options.appLog ? options.appLog.tr : cf.appLog.timeRotate
     cf.appLog.path = options.appLog ? options.appLog.path : cf.appLog.path
   }
   return cf
