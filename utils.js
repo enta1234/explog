@@ -56,13 +56,13 @@ utils.prototype.getBody = (res) => {
     } else {
       if (!opt.multiple) {
         const log = 'outgoing| __status_code=' + res.statusCode + ' __headers=' + JSON.stringify(res._headers) +
-          ' __body=' + chunk.split(/\r\n|\r|\n/g) +
+          ' __body=null' +
           ' __response_time=' + (Date.now() - res.req.requestTime) + 'ms'
         console.log(log)
       } else {
         console.log('outgoing| __status_code=' + res.statusCode)
         console.log('__headers=' + JSON.stringify(res._headers))
-        console.log('__body=' + chunk.split(/\r\n|\r|\n/g))
+        console.log('__body=null')
         console.log('__response_time=' + (Date.now() - res.req.requestTime) + 'ms')
       }
     }
