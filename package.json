@@ -1,6 +1,6 @@
 {
   "name": "explog",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Request and response logger middleware for console on node.js",
   "main": "index.js",
   "dependencies": {},
